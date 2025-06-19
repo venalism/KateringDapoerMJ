@@ -15,11 +15,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 
     <style>
+
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #F8F4E1;
             color: #4E1F00;
         }
+
+        .step-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #FEBA17;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
 
         .navbar {
   position: fixed;

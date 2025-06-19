@@ -85,18 +85,43 @@
         </div>
 
         {{-- Cara Pemesanan --}}
+{{-- Cara Pemesanan --}}
 <div class="mt-5" id="cara-pesan">
     <h2 class="mb-4 fw-bold">Cara Pemesanan</h2>
-    <ol class="list-group list-group-numbered ">
-        <li class="list-group-item">Pilih menu yang Anda inginkan dari halaman <strong>Menu</strong>.</li>
-        <li class="list-group-item">Klik tombol <strong>"Lihat"</strong> untuk detail menu.</li>
-        <li class="list-group-item">Jika ingin memasukan ke keranjang klik <strong>"Tambah ke kerajang"</strong>.</li>
-        <li class="list-group-item">Klik keranjang lalu ktsappPesan via Wha"</strong> untuk detail menu.</li>
-        <li class="list-group-item">Hubungi kami via WhatsApp/telepon yang tertera di bagian <strong>Kontak Kami</strong>.</li>
-        <li class="list-group-item">Konfirmasi pesanan, jumlah, dan waktu pengantaran.</li>
-        <li class="list-group-item">Selesaikan pembayaran dan tunggu pesanan Anda dikirim!</li>
-    </ol>
+    <div class="row row-cols-1 row-cols-md-5 g-4 text-center">
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">1</div>
+                <p class="mt-3">Pilih menu yang Anda inginkan di halaman <strong>Menu</strong>.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">2</div>
+                <p class="mt-3">Klik tombol <strong>"Lihat"</strong> untuk melihat detail menu.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">3</div>
+                <p class="mt-3">Klik <strong>"Tambah ke keranjang"</strong> jika ingin memesan.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">4</div>
+                <p class="mt-3">Buka keranjang dan klik <strong>"Pesan via WhatsApp"</strong>.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: whitet;">
+                <div class="step-circle">5</div>
+                <p class="mt-3">Hubungi kami melalui WhatsApp atau telepon di <strong>Kontak Kami</strong>.</p>
+            </div>
+        </div>
+    </div>
 </div>
+
         
 
         {{-- Kontak --}}
