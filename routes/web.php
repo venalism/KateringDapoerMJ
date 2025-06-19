@@ -33,9 +33,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
 
-Route::get('/', function () {
-    return view('menus.index');
-});
+Route::get('/', [MenuController::class, 'index']);
 
 Route::get('/navbar', function () {
     return view('navbar');
