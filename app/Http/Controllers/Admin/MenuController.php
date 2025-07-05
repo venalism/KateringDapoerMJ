@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Menu; // Pastikan model Menu di-import
+use App\Models\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Untuk mengelola file
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -65,6 +65,9 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         return view('admin.menus.edit', compact('menu'));
+        $menu->load('photos');
+        $categories = \App\Models\Category::all(); 
+        return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
     /**

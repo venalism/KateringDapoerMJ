@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.admin')
 
-<head>
-    <title>Edit Menu</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Kelola Menu')
 
-<body>
+@section('content')
     <div class="container mt-5">
         <h2>Edit Menu: {{ $menu->name }}</h2>
         <form action="{{ route('menu.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
@@ -36,6 +32,40 @@
             <a href="{{ route('menu.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
-</body>
+    {{-- ... di dalam file edit.blade.php setelah form utama ... --}}
+    <hr class="my-5">
 
-</html>
+    {{-- Bagian untuk Mengelola Foto Tambahan --}}
+    <h4>Kelola Foto Tambahan</h4>
+
+    {{-- Tampilkan Foto yang Sudah Ada --}}
+    <div class="row">
+        @forelse ($menu->photos as $photo)
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <img src="{{ Storage::url($photo->photo_path) }}" class="card-img-top" alt="Menu Photo">
+                    <div class="card-body text-center">
+                        <form action="{{ route('menu-photos.destroy', $photo->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin hapus foto ini?')">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <p>Belum ada foto tambahan.</p>
+        @endforelse
+    </div>
+
+    {{-- Form untuk Upload Foto Baru --}}
+    <form action="{{ route('menu-photos.store', $menu->id) }}" method="POST" enctype="multipart/form-data" class="mt-4">
+        @csrf
+        <div class="mb-3">
+            <label for="photos" class="form-label">Upload Foto Baru (bisa pilih lebih dari satu)</label>
+            <input class="form-control" type="file" id="photos" name="photos[]" multiple>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Foto</button>
+    </form>
+@endsection
