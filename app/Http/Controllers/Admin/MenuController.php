@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,31 +30,27 @@ class MenuController extends Controller
     /**
      * Menyimpan menu baru ke database.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        // 1. Validasi input
-        $request->validate([
+        // 1. Validasi input, tambahkan 'about'
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Gambar opsional
+            'about' => 'required|string',
+            'price' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $imagePath = null;
-        // 2. Jika ada file gambar yang di-upload
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/menus');
         }
 
-        // 3. Simpan ke database
-        Menu::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $imagePath,
-            // Asumsi category_id ada, jika tidak ada hapus baris ini
-            'category_id' => 1, 
-        ]);
+        // 2. Tambahkan 'image' ke array data yang divalidasi
+        $validatedData['image'] = $imagePath;
+
+        // 3. Simpan ke database menggunakan data yang sudah tervalidasi
+        Menu::create($validatedData);
 
         return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan!');
     }
@@ -64,9 +61,8 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        return view('admin.menus.edit', compact('menu'));
+        $categories = Category::all();
         $menu->load('photos');
-        $categories = \App\Models\Category::all(); 
         return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
@@ -75,32 +71,25 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        // 1. Validasi
-        $request->validate([
+        // 1. Validasi, tambahkan 'about'
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'about' => 'required|string',
+            'price' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $imagePath = $menu->image;
         // 2. Cek jika ada gambar baru
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
             if ($menu->image) {
                 Storage::delete($menu->image);
             }
-            // Simpan gambar baru
-            $imagePath = $request->file('image')->store('public/menus');
+            $validatedData['image'] = $request->file('image')->store('public/menus');
         }
 
         // 3. Update data
-        $menu->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $imagePath,
-        ]);
+        $menu->update($validatedData);
 
         return redirect()->route('menu.index')->with('success', 'Menu berhasil diperbarui!');
     }

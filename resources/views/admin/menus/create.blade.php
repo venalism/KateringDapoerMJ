@@ -12,8 +12,12 @@
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                <label for="about" class="form-label">Tentang Menu</label>
+                <textarea class="form-control @error('about') is-invalid @enderror" id="about" name="about" rows="4"
+                    required>{{ old('about') }}</textarea>
+                @error('about')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Harga</label>
