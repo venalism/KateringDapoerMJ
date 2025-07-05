@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="p-3 rounded shadow-sm h-100" style="background-color: whitet;">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
                 <div class="step-circle">5</div>
                 <p class="mt-3">Hubungi kami melalui WhatsApp atau telepon di <strong>Kontak Kami</strong>.</p>
             </div>
