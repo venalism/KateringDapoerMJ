@@ -15,55 +15,55 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::latest()->paginate(10); // Ambil semua menu, urutkan dari yang terbaru
+        $menus = Menu::with('category')->latest()->paginate(10);
         return view('admin.menus.index', compact('menus'));
     }
 
     /**
      * Menampilkan form untuk membuat menu baru.
+     * PERBAIKAN KRUSIAL ADA DI SINI.
      */
     public function create()
     {
-        $categories = Category::all(); 
+        // Mengambil semua kategori untuk dikirim ke view
+        $categories = Category::all();
+        // Mengirim data kategori ke view 'create'
         return view('admin.menus.create', compact('categories'));
     }
 
     /**
      * Menyimpan menu baru ke database.
      */
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        // 1. Validasi input, tambahkan 'about'
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'about' => 'required|string',
-            'price' => 'required|integer|min:0',
-            'stock' => 'required|integer|min:0',
-            'is_popular' => 'nullable|boolean',
+            'name'        => 'required|string|max:255',
+            'about'       => 'required|string',
+            'price'       => 'required|integer|min:0',
+            'stock'       => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'is_popular'  => 'nullable|boolean',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/menus');
-        }
-        
         $validatedData['is_popular'] = $request->has('is_popular');
-        $validatedData['image'] = $imagePath;
+
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('public/menus');
+        }
+
         Menu::create($validatedData);
 
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan!');
+        return redirect()->route('menu.index')->with('success', 'Menu baru berhasil ditambahkan!');
     }
-
 
     /**
      * Menampilkan form untuk mengedit menu.
      */
     public function edit(Menu $menu)
     {
-        $categories = Category::all();
         $menu->load('photos');
+        $categories = Category::all();
         return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
@@ -73,25 +73,27 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'about' => 'required|string',
-            'price' => 'required|integer|min:0',
-            'stock' => 'required|integer|min:0',
-            'is_popular' => 'nullable|boolean', 
+            'name'        => 'required|string|max:255',
+            'about'       => 'required|string',
+            'price'       => 'required|integer|min:0',
+            'stock'       => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'is_popular'  => 'nullable|boolean',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        if ($request->hasFile('image')) {
-        if ($menu->image) {
-            Storage::delete($menu->image);
-        }
-        $validatedData['image'] = $request->file('image')->store('public/menus');
-        }
         $validatedData['is_popular'] = $request->has('is_popular');
 
+        if ($request->hasFile('image')) {
+            if ($menu->image) {
+                Storage::delete($menu->image);
+            }
+            $validatedData['image'] = $request->file('image')->store('public/menus');
+        }
+
         $menu->update($validatedData);
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil diperbarui!');
+
+        return redirect()->route('menu.index')->with('success', 'Data menu berhasil diperbarui!');
     }
 
     /**
@@ -99,13 +101,17 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        // Hapus gambar terkait jika ada
         if ($menu->image) {
             Storage::delete($menu->image);
         }
 
+        foreach ($menu->photos as $photo) {
+            Storage::delete($photo->photo);
+            $photo->delete();
+        }
+
         $menu->delete();
 
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil dihapus!');
+        return redirect()->route('menu.index')->with('success', 'Menu berhasil dihapus beserta semua fotonya.');
     }
 }
