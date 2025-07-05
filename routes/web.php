@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Auth\LoginController;
 
+Route::get('/', [MenuController::class, 'index'])->name('menus.index');
+
 Route::resource('menus', MenuController::class)->only(['index', 'show']);
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('menus.show');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
