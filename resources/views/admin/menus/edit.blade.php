@@ -24,6 +24,20 @@
                 <label for="price" class="form-label">Harga</label>
                 <input type="number" class="form-control" id="price" name="price" value="{{ $menu->price }}" required>
             </div>
+            <div class="col-md-6 mb-3">
+                <label for="stock" class="form-label">Stok</label>
+                <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock"
+                    value="{{ old('stock', $menu->stock) }}" required>
+                @error('stock')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="is_popular" id="is_popular" value="1" {{ old('is_popular', $menu->is_popular) ? 'checked' : '' }}>
+                <label class="form-check-label" for="is_popular">
+                    Tandai sebagai Menu Populer
+                </label>
+            </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Gambar Menu (Kosongkan jika tidak ingin diubah)</label>
                 <input type="file" class="form-control" id="image" name="image">

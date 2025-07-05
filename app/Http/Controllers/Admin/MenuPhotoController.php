@@ -22,7 +22,7 @@ class MenuPhotoController extends Controller
                 $path = $file->store('public/menus/photos');
                 MenuPhoto::create([
                     'menu_id' => $menuId,
-                    'photo_path' => $path,
+                    'photo' => $path,
                 ]);
             }
         }
@@ -32,7 +32,7 @@ class MenuPhotoController extends Controller
 
     public function destroy(MenuPhoto $photo)
     {
-        Storage::delete($photo->photo_path);
+        Storage::delete($photo->photo);
         $photo->delete();
         return back()->with('success', 'Foto berhasil dihapus.');
     }
