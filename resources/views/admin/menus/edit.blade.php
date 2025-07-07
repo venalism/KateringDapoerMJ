@@ -96,7 +96,7 @@
                 @forelse ($menu->photos as $photo)
                     <div class="col-md-3 mb-3">
                         <div class="card position-relative">
-                            <img src="{{ Storage::url($photo->photo_path) }}" class="card-img-top" alt="Menu Photo">
+                            <img src="{{ Storage::url($photo->photo) }}" class="card-img-top" alt="Menu Photo">
                             <form action="{{ route('menu-photos.destroy', $photo->id) }}" method="POST"
                                 class="position-absolute top-0 end-0 p-1">
                                 @csrf

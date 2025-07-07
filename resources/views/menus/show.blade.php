@@ -42,13 +42,21 @@
         <div class="menu-detail shadow">
             <div class="row align-items-center">
                 <div class="col-md-6 mb-4 mb-md-0">
-                    <img src="{{ asset('image/' . $menu->photos->first()->photo) }}" class="img-fluid rounded shadow"
-                        alt="{{ $menu->name }}">
+                    {{-- Cek dulu apakah ada foto di galeri, untuk menghindari error --}}
+                    @if ($menu->photos->isNotEmpty())
+                        <img src="{{ Storage::url($menu->photos->first()->photo) }}" class="img-fluid rounded shadow"
+                            alt="{{ $menu->name }}">
+                    @else
+                        {{-- Tampilkan gambar default jika tidak ada foto sama sekali --}}
+                        <img src="{{ asset('image/default_image.png') }}" class="img-fluid rounded shadow"
+                            alt="Gambar tidak tersedia">
+                    @endif
                 </div>
                 <div class="col-md-6">
                     <h2 class="fw-bold">{{ $menu->name }}</h2>
                     <p class="text-muted mb-1">Tersedia mulai:
-                        <strong>{{ \Carbon\Carbon::parse($menu->date)->format('d M Y') }}</strong></p>
+                        <strong>{{ \Carbon\Carbon::parse($menu->date)->format('d M Y') }}</strong>
+                    </p>
                     <p class="price-tag">Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
 
                     @if ($menu->is_popular)

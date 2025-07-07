@@ -37,9 +37,10 @@
                         <tr>
                             <th scope="row">{{ $menus->firstItem() + $key }}</th>
                             <td>
-                                @if ($menu->image)
-                                    <img src="{{ Storage::url($menu->image) }}" alt="{{ $menu->name }}" class="img-fluid rounded"
-                                        style="max-height: 75px;">
+                                {{-- Ambil foto pertama dari relasi 'photos' --}}
+                                @if ($menu->photos->first())
+                                    <img src="{{ Storage::url($menu->photos->first()->photo) }}" alt="{{ $menu->name }}"
+                                        class="img-fluid rounded" style="max-height: 75px;">
                                 @else
                                     <span class="text-muted">No Image</span>
                                 @endif

@@ -37,7 +37,6 @@
                     <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
                         name="category_id" required>
                         <option value="" disabled selected>-- Pilih Kategori --</option>
-                        {{-- Ini bisa berjalan karena controller sudah mengirimkan $categories --}}
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
@@ -55,11 +54,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Gambar Utama Menu</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
-                    <div class="form-text">Upload satu gambar utama. Foto-foto lain bisa ditambahkan di halaman edit setelah
-                        menu disimpan.</div>
-                    @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <label for="photo" class="form-label">Gambar Utama Menu <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo"
+                        required>
+                    <div class="form-text">Wajib mengupload satu gambar utama saat membuat menu.</div>
+                    @error('photo')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-check mb-3">
