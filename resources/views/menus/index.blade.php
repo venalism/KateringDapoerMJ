@@ -74,8 +74,10 @@
                             <div class="card h-100 shadow-sm" style="background-color: white;">
                                 {{-- Cek dulu apakah ada foto di galeri, untuk menghindari error --}}
                                 @if ($menu->photos->isNotEmpty())
-                                    <img src="{{ Storage::url($menu->photos->first()->photo) }}" class="img-fluid rounded shadow"
-                                        alt="{{ $menu->name }}">
+                                    <img src="{{ asset('image/' . $menu->photos->first()->photo) }}"
+     class="img-fluid rounded shadow"
+     alt="{{ $menu->name }}">
+
                                 @else
                                     {{-- Tampilkan gambar default jika tidak ada foto sama sekali --}}
                                     <img src="{{ asset('image/default_image.png') }}" class="img-fluid rounded shadow"

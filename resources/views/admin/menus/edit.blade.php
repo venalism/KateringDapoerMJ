@@ -65,7 +65,7 @@
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
                     @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     @if ($menu->image)
-                        <img src="{{ Storage::url($menu->image) }}" alt="Current Image" class="img-thumbnail mt-2" width="150">
+                        <img src="{{ asset('image/' . $menu->photo) }}" alt="{{ $menu->name }}">
                     @endif
                 </div>
 
