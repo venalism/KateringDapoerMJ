@@ -66,18 +66,17 @@
             scroll-margin-top: 80px;
         }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #FEBA17;
-    color: #4E1F00;
-    padding: 20px 0;
-    text-align: center;
-    z-index: 1030;
-}
-
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FEBA17;
+            color: #4E1F00;
+            padding: 20px 0;
+            text-align: center;
+            z-index: 1030;
+        }
     </style>
 </head>
 
@@ -106,24 +105,11 @@ footer {
                         <a class="nav-link" href="{{ url('/menus#kontak') }}">Kontak</a>
                     </li>
                 </ul>
-
-<<<<<<< HEAD
-                <!-- Tombol kanan -->
                 <div class="d-flex align-items-center gap-2">
                     <a href="{{ url('/cart') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
                         <i class="bi bi-cart-fill"></i> Keranjang
                     </a>
                 </div>
-=======
-          
-<div class="d-flex align-items-center gap-2">
-    <a href="{{ url('/cart') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
-        <i class="bi bi-cart-fill"></i> Keranjang
-    </a>
-</div>
->>>>>>> 4815c680769f25238fcfce2befe184ec8b29d847
-
-
             </div>
     </nav>
 
