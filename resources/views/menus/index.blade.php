@@ -75,8 +75,7 @@
                                 {{-- Cek dulu apakah ada foto di galeri, untuk menghindari error --}}
                                 @if ($menu->photos->isNotEmpty())
                                     <img src="{{ asset('image/' . $menu->photos->first()->photo) }}"
-     class="img-fluid rounded shadow"
-     alt="{{ $menu->name }}">
+                                        class="img-fluid rounded shadow" alt="{{ $menu->name }}">
 
                                 @else
                                     {{-- Tampilkan gambar default jika tidak ada foto sama sekali --}}
