@@ -40,6 +40,7 @@ class CartController extends Controller
         }
         return back()->with('success', 'Menu dihapus dari keranjang.');
     }
+
     public function update(Request $request, $id)
 {
     $cart = session()->get('cart', []);
@@ -54,7 +55,7 @@ class CartController extends Controller
         session()->put('cart', $cart);
     }
 
-    return redirect()->back()->with('success', 'Jumlah diperbarui.');
+    return back()->with('success', 'Jumlah diperbarui.');
 }
 
 

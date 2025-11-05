@@ -8,10 +8,26 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     public function index()
+<<<<<<< HEAD
     {
         $menus = Menu::with(['category', 'photos'])->get();
         return view('menus.index', compact('menus'));
     }
+=======
+{
+    $menus = Menu::with(['category', 'photos'])->get();
+
+    return view('menus.index', compact('menus'));
+}
+
+
+public function show(Menu $menu)
+{
+    $menu->load(['photos', 'category']); 
+    return view('menus.show', compact('menu'));
+}
+
+>>>>>>> 4815c680769f25238fcfce2befe184ec8b29d847
 
     public function show(Menu $menu)
     {

@@ -21,7 +21,7 @@ class Menu extends Model
         'stock',
         'is_popular',
         'category_id',
-        'day_id',
+
     ];
 
     public function setNameAttribute($value)
