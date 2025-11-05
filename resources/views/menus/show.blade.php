@@ -57,8 +57,6 @@
                         <button type="submit" class="btn btn-warning w-100 text-white"
                             style="background-color: #4E1F00">Tambah ke Keranjang</button>
                     </form>
-                    >>>>>>> 4815c680769f25238fcfce2befe184ec8b29d847
-
                     <div class="container mt-4">
                         <div class="menu-detail shadow">
                             <div class="row align-items-center">
