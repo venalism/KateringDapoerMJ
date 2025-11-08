@@ -5,14 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dapoer MJ')</title>
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 
     <style>
@@ -54,10 +49,15 @@
         }
 
         footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             background-color: #FEBA17;
             color: #4E1F00;
             padding: 20px 0;
             text-align: center;
+            z-index: 1030;
         }
         html {
         scroll-behavior: smooth; /* Bonus: Bikin scroll-nya jadi alus */
@@ -91,8 +91,6 @@
                         <a class="nav-link" href="{{ url('/#kontak') }}">Kontak</a>
                     </li>
                 </ul>
-
-                <!-- Tombol kanan -->
                 <div class="d-flex align-items-center gap-2">
                     @auth
                         <!-- Kalau user sudah login -->
