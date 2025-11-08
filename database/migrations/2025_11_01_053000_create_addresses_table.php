@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-$table->string('name');
-$table->string('email')->unique();
-$table->string('password');
-$table->string('role')->default('customer'); // tambah ini
-$table->rememberToken();
-$table->timestamps();
-        });
+        Schema::create('addresses', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->string('no_wa');     // nomor WhatsApp
+    $table->text('alamat');      // alamat lengkap
+    $table->timestamps();
+});
+
     }
 
     /**
@@ -27,6 +26,6 @@ $table->timestamps();
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('addresses');
     }
 };

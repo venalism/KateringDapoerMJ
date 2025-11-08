@@ -3,9 +3,25 @@
 @section('title', 'Tambah Kategori Baru')
 
 @section('content')
+    <style>
+        .btn-mj {
+            background-color: #FEBA17;
+            border-color: #FEBA17;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .btn-mj:hover {
+            background-color: #e9a90f;
+            border-color: #e9a90f;
+            color: #000;
+        }
+    </style>
+
     <h2>Tambah Kategori Baru</h2>
     <p class="text-muted">Buat kategori baru untuk mengelompokkan menu Anda.</p>
     <hr>
+
     <div class="card">
         <div class="card-body">
             <form action="{{ route('categories.store') }}" method="POST">
@@ -20,8 +36,9 @@
                         </div>
                     @enderror
                 </div>
+
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-mj">Simpan</button>
                     <a href="{{ route('categories.index') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>

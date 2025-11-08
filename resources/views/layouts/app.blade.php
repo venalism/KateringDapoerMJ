@@ -22,20 +22,6 @@
             color: #4E1F00;
         }
 
-        .step-circle {
-            width: 50px;
-            height: 50px;
-            background-color: #FEBA17;
-            color: white;
-            border-radius: 50%;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin: 0 auto;
-        }
-
         .navbar {
             position: fixed;
             top: 0;
@@ -63,12 +49,8 @@
             border-color: #74512D;
         }
 
-        #menu,
-        #beranda,
-        #cara-pesan,
-        #kontak,
-        #cart {
-            scroll-margin-top: 80px;
+        main {
+            margin-top: 90px;
         }
 
         footer {
@@ -77,13 +59,17 @@
             padding: 20px 0;
             text-align: center;
         }
+        html {
+        scroll-behavior: smooth; /* Bonus: Bikin scroll-nya jadi alus */
+        scroll-padding-top: 90px; /* INI SOLUSINYA */
+    }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Dapoer MJ</a>
+            <a class="navbar-brand" href="{{ url('/') }}">🍱 Dapoer MJ</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -93,30 +79,61 @@
                 <!-- Menu tengah -->
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/menus#kategori') }}">Beranda</a>
+                        <a class="nav-link" href="{{ url('/') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/menus#menu') }}">Menu</a>
+                        <a class="nav-link" href="{{ url('/#menu') }}">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/menus#cara-pesan') }}">Cara Pesan</a>
+                        <a class="nav-link" href="{{ url('/#cara-pesan') }}">Cara Pesan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/menus#kontak') }}">Kontak</a>
+                        <a class="nav-link" href="{{ url('/#kontak') }}">Kontak</a>
                     </li>
                 </ul>
 
                 <!-- Tombol kanan -->
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{{ url('/cart') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
-                        <i class="bi bi-cart-fill"></i> Keranjang
-                    </a>
+                    @auth
+                        <!-- Kalau user sudah login -->
+                        <a href="{{ url('/cart') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
+                            <i class="bi bi-cart-fill"></i> Keranjang
+                        </a>
+
+                        <div class="dropdown">
+                            <button class="btn btn-sm text-white dropdown-toggle" style="background-color: #4E1F00;" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url('/profile/index') }}"><i class="bi bi-gear"></i> Profil Saya</a></li>
+                                @if (Auth::user()->role === 'admin')
+                                    <li><a class="dropdown-item" href="{{ url('/admin/dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard Admin</a></li>
+                                @endif
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button class="dropdown-item text-danger"><i class="bi bi-box-arrow-right"></i> Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <!-- Kalau belum login -->
+                        <a href="{{ url('/cart') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
+                            <i class="bi bi-cart-fill"></i> Keranjang
+                        </a>
+                        <a href="{{ url('/login') }}" class="btn btn-sm text-white" style="background-color: #4E1F00;">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                        <a href="{{ url('/register') }}" class="btn btn-sm text-white" style="background-color: #74512D;">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
+                    @endauth
                 </div>
-
-
             </div>
+        </div>
     </nav>
-
 
     <main class="py-4">
         @yield('content')

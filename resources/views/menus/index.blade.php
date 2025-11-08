@@ -5,13 +5,12 @@
 @section('content')
     <div class="py-4" style="background-color: #F8F4E1;">
         <div class="container">
-
             {{-- Kategori --}}
-            <section id="kategori" class="py-5">
+            <section id="kategori" class="pt-2 pb-5"> {{-- <br> nya sudah dihapus --}} <div class="container">
                 <br>
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-md-13 text-center text-md-start mb-4 mb-md-0">
+                        <div class="col-md-12 text-center text-md-start mb-4 mb-md-0">
                             <h1 class="fw-bold">Selamat Datang di <span style="color: #FEBA17;">Dapoer MJ</span></h1>
                             <p class="lead">Dapoer MJ adalah layanan katering rumahan terpercaya yang menyajikan aneka menu
                                 dengan cita rasa rumahan yang menggugah selera. Kami menghadirkan pilihan paket seperti nasi
@@ -105,41 +104,40 @@
 
             {{-- Cara Pemesanan --}}
             <div class="mt-5" id="cara-pesan">
-                <h2 class="mb-4 fw-bold">Cara Pemesanan</h2>
-                <div class="row row-cols-1 row-cols-md-5 g-4 text-center">
-                    <div class="col">
-                        <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
-                            <div class="step-circle">1</div>
-                            <p class="mt-3">Pilih menu yang Anda inginkan di halaman <strong>Menu</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
-                            <div class="step-circle">2</div>
-                            <p class="mt-3">Klik tombol <strong>"Lihat"</strong> untuk melihat detail menu.</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
-                            <div class="step-circle">3</div>
-                            <p class="mt-3">Klik <strong>"Tambah ke keranjang"</strong> jika ingin memesan.</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
-                            <div class="step-circle">4</div>
-                            <p class="mt-3">Buka keranjang dan klik <strong>"Pesan via WhatsApp"</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
-                            <div class="step-circle">5</div>
-                            <p class="mt-3">Hubungi kami melalui WhatsApp atau telepon di <strong>Kontak Kami</strong>.</p>
-                        </div>
-                    </div>
-                </div>
+    <h2 class="mb-4 fw-bold">Cara Pemesanan</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4 text-center">
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">1</div>
+                <p class="mt-3">Pilih menu yang Anda inginkan di halaman <strong>Menu</strong>.</p>
             </div>
-
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">2</div>
+                <p class="mt-3">Klik <strong>"Tambah ke keranjang"</strong> pada menu yang Anda pilih.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">3</div>
+                <p class="mt-3">Buka <strong>Keranjang Belanja</strong> dan periksa kembali pesanan Anda.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">4</div>
+                <p class="mt-3">Masukkan <strong>No. WhatsApp</strong> dan <strong>Alamat</strong> lengkap Anda.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 rounded shadow-sm h-100" style="background-color: white;">
+                <div class="step-circle">5</div>
+                <p class="mt-3">Pilih <strong>metode pembayaran</strong> dan selesaikan transaksi.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
             {{-- Kontak --}}

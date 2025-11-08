@@ -3,16 +3,23 @@
 @section('title', 'Keranjang Belanja - Dapoer MJ')
 
 @section('content')
+<br><br>
 
-    <br>
-    <br>
-    <div class="container" id="cart">
-        <h2 class="fw-bold mb-4">Keranjang Belanja</h2>
+<div class="container" id="cart">
+    <h2 class="fw-bold mb-4">Keranjang Belanja</h2>
 
-        @if(session('cart') && count(session('cart')) > 0)
-            <table class="table table-bordered">
-                <thead>
+    @php
+        $isLoggedIn = Auth::check();
+        $cartItems = $isLoggedIn ? $carts : session('cart', []);
+    @endphp
+
+    @if(($isLoggedIn && $carts->count() > 0) || (!$isLoggedIn && count($cartItems) > 0))
+        <form action="{{ route('checkout.store') }}" method="POST" id="checkoutForm">
+            @csrf
+            <table class="table table-bordered align-middle">
+                <thead class="table-warning text-center">
                     <tr>
+                        <th>Pilih</th>
                         <th>Menu</th>
                         <th>Harga</th>
                         <th>Jumlah</th>
@@ -21,68 +28,74 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $total = 0; @endphp
-                    @foreach(session('cart') as $id => $details)
-                        @php $subtotal = $details['price'] * $details['quantity']; @endphp
+                    @foreach ($cartItems as $item)
+                        @php
+                            $menu = $isLoggedIn ? $item->menu : null;
+                            $price = $isLoggedIn ? $menu->price : $item['price'];
+                            $name = $isLoggedIn ? $menu->name : $item['name'];
+                            $qty = $isLoggedIn ? $item->quantity : $item['quantity'];
+                            $subtotal = $price * $qty;
+                            $id = $isLoggedIn ? $menu->id : $loop->index;
+                        @endphp
                         <tr>
-                            <td>
-                                {{ $details['name'] }}
+                            <td class="text-center">
+                                <input type="checkbox" name="selected_items[]" value="{{ $id }}" class="item-checkbox"
+                                    data-subtotal="{{ $subtotal }}">
                             </td>
-                            <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
-                            <td>
-                                <form action="{{ route('cart.update', $id) }}" method="POST"
-                                    class="d-flex align-items-center justify-content-between w-50">
-                                    @csrf
-                                    @method('PATCH')
-
-                                    <!-- Tombol Decrease -->
-                                    <button type="submit" name="action" value="decrease" class="btn">-</button>
-
-                                    <!-- Quantity di kiri tanpa input box -->
-                                    <span class="mx-3 h5">{{ $details['quantity'] }}</span>
-
-                                    <!-- Tombol Increase -->
-                                    <button type="submit" name="action" value="increase" class="btn">+</button>
-                                </form>
-                            </td>
-
-
-
+                            <td>{{ $name }}</td>
+                            <td>Rp {{ number_format($price, 0, ',', '.') }}</td>
+                            <td class="text-center">{{ $qty }}</td>
                             <td>Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
-                            <td>
+                            <td class="text-center">
                                 <form action="{{ route('cart.remove', $id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                 </form>
                             </td>
                         </tr>
-                        @php $total += $subtotal; @endphp
                     @endforeach
                 </tbody>
             </table>
 
-            <div class="text-end fw-bold">
-                Total: Rp {{ number_format($total, 0, ',', '.') }}
+            <div class="text-end mt-3">
+                <h5>Total yang dipilih: <span id="selectedTotal">Rp 0</span></h5>
             </div>
 
-            @php
-                $whatsappMessage = "Halo, saya mau pesan menu:\n";
-                foreach (session('cart') as $details) {
-                    $subtotal = $details['price'] * $details['quantity'];
-                    $whatsappMessage .= "- {$details['name']} x {$details['quantity']} = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
-                }
-                $whatsappMessage .= "\nTotal: Rp " . number_format($total, 0, ',', '.');
-                $encodedMessage = urlencode($whatsappMessage);
-            @endphp
-
-            <div class="mt-3 text-end">
-                <a href="https://wa.me/6289662315611?text={{ $encodedMessage }}" target="_blank" class="btn btn-success">Pesan
-                    via WhatsApp</a>
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-success px-4 py-2" id="checkoutBtn" disabled>
+                    Checkout
+                </button>
             </div>
+        </form>
+    @else
+        <div class="alert alert-info">Keranjang belanja kosong.</div>
+    @endif
+</div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const totalEl = document.getElementById('selectedTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
 
-        @else
-            <div class="alert alert-info">Keranjang belanja kosong.</div>
-        @endif
-    </div>
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', updateTotal);
+    });
+
+    function updateTotal() {
+        let total = 0;
+        let checkedCount = 0;
+
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                total += parseFloat(cb.dataset.subtotal);
+                checkedCount++;
+            }
+        });
+
+        totalEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
+        checkoutBtn.disabled = checkedCount === 0;
+    }
+});
+</script>
 @endsection
