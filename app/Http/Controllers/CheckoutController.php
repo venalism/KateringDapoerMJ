@@ -12,16 +12,28 @@ use Midtrans\Config;
 class CheckoutController extends Controller
 {
     public function store(Request $request)
-    {
-        $request->validate([
-            'selected_items' => 'required|array|min:1',
-        ]);
+{
+    $request->validate([
+        'selected_items' => 'required|array',
+        'quantities' => 'required|array',
+    ]);
 
-        // Simpan ID item yang dipilih ke session
-        session(['selected_items' => $request->selected_items]);
+    $selected = $request->selected_items;
+    $quantities = $request->quantities;
 
-        return redirect()->route('checkout.form');
+    foreach ($selected as $menuId) {
+        \App\Models\Cart::where('user_id', auth()->id())
+            ->where('menu_id', $menuId)
+            ->update([
+                'quantity' => $quantities[$menuId] ?? 1,
+            ]);
     }
+
+    session(['selected_items' => $selected]);
+
+    return redirect()->route('checkout.form');
+}
+
 
     public function form()
 {
