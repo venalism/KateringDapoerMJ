@@ -49,7 +49,7 @@
         }
 
         footer {
-            position: fixed;
+            position: relative;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -142,7 +142,7 @@
             &copy; {{ date('Y') }} Dapoer MJ. All rights reserved.
         </div>
     </footer>
-
+@include('components.chatbot')
     @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -159,6 +159,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+</body>
 </html>
+

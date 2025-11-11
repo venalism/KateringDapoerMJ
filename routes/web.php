@@ -15,6 +15,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 
+Route::post('/chatbot/respond', [App\Http\Controllers\ChatbotController::class, 'respond'])->name('chatbot.respond');
 
 Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
