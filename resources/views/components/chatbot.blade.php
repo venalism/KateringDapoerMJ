@@ -3,7 +3,7 @@
 /* Tombol Chat Floating */
 #chatbot-btn {
     position: fixed;
-    bottom: 25px; /* Pindah ke bawah agar tidak terlalu tinggi */
+    bottom: 90px; /* Pindah ke bawah agar tidak terlalu tinggi */
     right: 25px;
     background: #4E1F00; /* Coklat Tua Dapoer MJ */
     border-radius: 50%;
